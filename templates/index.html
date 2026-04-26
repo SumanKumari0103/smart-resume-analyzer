@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Resume Analyzer Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+
+    <h1>AI Resume Analyzer Pro</h1>
+    <p>Upload Resume & Get AI Career Insights</p>
+
+    <form action="/predict" method="post" enctype="multipart/form-data">
+
+        <div class="upload-box">
+            <p>📄 Upload Resume PDF</p>
+            <input type="file" name="resume" required>
+        </div>
+
+        <button type="submit">Analyze Resume</button>
+
+    </form>
+
+    <!-- 🔥 SAFE CONDITION: only show AFTER prediction exists -->
+    {% if prediction is defined and prediction %}
+
+    <div class="dashboard">
+
+        <div class="card">
+            <h3>🎯 Predicted Role</h3>
+            <p>{{ prediction }}</p>
+        </div>
+
+        <div class="card">
+            <h3>📈 ATS Score</h3>
+            <p>{{ score }}/100</p>
+        </div>
+
+        <div class="card">
+            <h3>💪 Resume Strength</h3>
+            <p>{{ strength }}</p>
+        </div>
+
+        <div class="card">
+            <h3>🛠 Skills Found</h3>
+            <p>{{ skills }}</p>
+        </div>
+
+        <div class="card">
+            <h3>❌ Missing Skills</h3>
+            <p>{{ missing }}</p>
+        </div>
+
+    </div>
+
+    <a href="/download">
+        <button style="margin-top:20px;">📄 Download Report</button>
+    </a>
+
+    {% else %}
+
+    <!-- 🔥 EMPTY STATE (IMPORTANT UX FIX) -->
+    <p style="margin-top:20px; color:gray;">
+        Upload a resume to see AI analysis.
+    </p>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
